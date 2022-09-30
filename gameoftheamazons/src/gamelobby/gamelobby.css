@@ -284,6 +284,9 @@ body{
  
  
 }
+.sidebarright li:hover{
+  color: gray;
+}
 .CGame .back{
   position: absolute;
   right: 25%;
@@ -317,5 +320,9 @@ body{
   height: 30%;
   width: 90%;
   font-size: 80%;
+}
+
+.grayed input[type=button]{
+  background-color: gray;
 }
   
