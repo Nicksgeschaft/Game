@@ -12,7 +12,7 @@ export default function Gamelobby() {
     // const [opId, setOpId] = useState({current: undefined});
     const [global, setGlobal] = useState({ userId: -1, pId: -1, opId: -1 });
     const userName = useRef();
-    const isChecked = useRef(false);
+    const [isChecked, setIsChecked] = useState(false);
 
 
     let userId = searchParams.get('userId')
@@ -223,8 +223,8 @@ export default function Gamelobby() {
     const pullPlayerInterval = setInterval(pullPlayerInGame, 5000);
 
     const check = () => {
-        // console.log(document.getElementById("playAgainstAI").checked);
-        isChecked.current = document.getElementById("playAgainstAI").checked;
+        console.log(document.getElementById("playAgainstAI").checked);
+        setIsChecked( document.getElementById("playAgainstAI").checked);
     }
 
     const checked = setInterval(check, 250);
@@ -283,7 +283,7 @@ export default function Gamelobby() {
                 <input type="button" id="back" className="back" value={"X"} onClick={closeWindow} />
                 <h1 className="CreateGame">Create Game</h1>
 
-                < GenerateBoard u={global} checked={isChecked.current} />
+                < GenerateBoard u={global} checked={isChecked} />
 
 
                 
