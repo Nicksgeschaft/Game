@@ -11,7 +11,10 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     let i = 1
     // Schleife, die nach unten alle erlaubten Felder markiert
     do {
-      if (startrow + i === b.board.rows || b.board.squares[startrow + i][startcolumn] === 0 || b.board.squares[startrow + i][startcolumn] === 1) {
+      if (startrow + i === b.board.rows || 
+        b.board.squares[startrow + i][startcolumn] === 0 || 
+        b.board.squares[startrow + i][startcolumn] === 1 ||
+        b.board.squares[startrow + i][startcolumn] === -2) {
         break
       }
       else {
@@ -26,7 +29,10 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Schleife, die nach oben alle erlaubten Felder markiert
     i = 1
     do {
-      if (startrow - i === -1 || b.board.squares[startrow - i][startcolumn] === 0 || b.board.squares[startrow - i][startcolumn] === 1) {
+      if (startrow - i === -1 || 
+        b.board.squares[startrow - i][startcolumn] === 0 || 
+        b.board.squares[startrow - i][startcolumn] === 1 ||
+        b.board.squares[startrow - i][startcolumn] === -2) {
         break
       }
       else {
@@ -41,7 +47,10 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Schleife, die nach links alle erlaubten Felder markiert
     i = 1
     do {
-      if (startcolumn - i === -1 || b.board.squares[startrow][startcolumn - i] === 0 || b.board.squares[startrow][startcolumn - i] === 1) {
+      if (startcolumn - i === -1 || 
+        b.board.squares[startrow][startcolumn - i] === 0 || 
+        b.board.squares[startrow][startcolumn - i] === 1 ||
+        b.board.squares[startrow][startcolumn - i] === -2) {
         break
       }
       else {
@@ -56,7 +65,10 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Schleife, die nach rechts alle erlaubten Felder markiert
     i = 1
     do {
-      if (startcolumn + i === b.board.columns || b.board.squares[startrow][startcolumn + i] === 0 || b.board.squares[startrow][startcolumn + i] === 1) {
+      if (startcolumn + i === b.board.columns || 
+        b.board.squares[startrow][startcolumn + i] === 0 || 
+        b.board.squares[startrow][startcolumn + i] === 1 ||
+        b.board.squares[startrow][startcolumn + i] === -2) {
         break
       }
       else {
@@ -71,7 +83,11 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Schleife, die nach rechts-oben alle erlaubten Felder markiert
     i = 1
     do {
-      if (startrow - i === -1 || startcolumn + i === b.board.columns || b.board.squares[startrow - i][startcolumn + i] === 0 || b.board.squares[startrow - i][startcolumn + i] === 1) {
+      if (startrow - i === -1 || 
+        startcolumn + i === b.board.columns || 
+        b.board.squares[startrow - i][startcolumn + i] === 0 || 
+        b.board.squares[startrow - i][startcolumn + i] === 1 ||
+        b.board.squares[startrow - i][startcolumn + i] === -2) {
         break
       }
       else {
@@ -86,7 +102,11 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Schleife, die nach rechts-unten alle erlaubten Felder markiert
     i = 1
     do {
-      if (startrow + i === b.board.rows || startcolumn + i === b.board.columns || b.board.squares[startrow + i][startcolumn + i] === 0 || b.board.squares[startrow + i][startcolumn + i] === 1) {
+      if (startrow + i === b.board.rows || 
+        startcolumn + i === b.board.columns || 
+        b.board.squares[startrow + i][startcolumn + i] === 0 || 
+        b.board.squares[startrow + i][startcolumn + i] === 1 ||
+        b.board.squares[startrow + i][startcolumn + i] === -2) {
         break
       }
       else {
@@ -101,7 +121,11 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Schleife, die nach links-oben alle erlaubten Felder markiert
     i = 1
     do {
-      if (startrow - i === -1 || startcolumn - i === -1 || b.board.squares[startrow - i][startcolumn - i] === 0 || b.board.squares[startrow - i][startcolumn - i] === 1) {
+      if (startrow - i === -1 || 
+        startcolumn - i === -1 || 
+        b.board.squares[startrow - i][startcolumn - i] === 0 || 
+        b.board.squares[startrow - i][startcolumn - i] === 1 ||
+        b.board.squares[startrow - i][startcolumn - i] === -2) {
         break
       }
       else {
@@ -116,7 +140,11 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Schleife, die nach links-unten alle erlaubten Felder markiert
     i = 1
     do {
-      if (startrow + i === b.board.rows || startcolumn - i === -1 || b.board.squares[startrow + i][startcolumn - i] === 0 || b.board.squares[startrow + i][startcolumn - i] === 1) {
+      if (startrow + i === b.board.rows || 
+        startcolumn - i === -1 || 
+        b.board.squares[startrow + i][startcolumn - i] === 0 || 
+        b.board.squares[startrow + i][startcolumn - i] === 1 ||
+        b.board.squares[startrow + i][startcolumn - i] === -2) {
         break
       }
       else {

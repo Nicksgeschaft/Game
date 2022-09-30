@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { newGame } from "../../communication/Communication";
+import { newGame,generateAI } from "../../communication/Communication";
 import { createBoard } from "../createBoard/CreateNewBoard";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { BackgroundColor } from "../RenderBoard"
@@ -161,6 +161,11 @@ export function GenerateBoard(u) {
         }
     }
 
+    const createAI = () => {
+        if(document.getElementById("playAgainstAI").checked === true){
+            generateAI() } else return; 
+            }
+
     return (
         <div className="settingswindow" id="sw">
 
@@ -170,7 +175,7 @@ export function GenerateBoard(u) {
                 <p>Dauer des Zuges (ms): </p>
                 <input id="inputTimeoutLength" type="number" ref={timeout} value={settings.timeoutTime} min="30000" onChange={submit} />
                 <p>Gegen AI spielen:
-                <input type="checkbox"class="playAgainstAI" value="Play against AI"></input></p>
+                <input type="checkbox"class="playAgainstAI" value="Play against AI" onClick={createAI}></input></p>
             </div>
             <div className="submitbutton">
 

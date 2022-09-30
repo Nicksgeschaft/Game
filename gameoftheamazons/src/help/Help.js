@@ -5,15 +5,11 @@ export default function Help() {
     let [searchParams] = useSearchParams();
     let navigate = useNavigate();
 
+    var gameId = searchParams.get('gameId');
+    var userId = searchParams.get('userId');
+
     async function navigategame() {
-        if (searchParams.get("gameId") === -1) {
-            searchParams.get("userId") !== -1 ? searchParams.get("opId") !== -1 ?
-                navigate("../?userId=" + searchParams.get("userId") + "&pId=" + searchParams.get("pId") + "&opId=" + searchParams.get("opId")) :
-                navigate("../userId=" + searchParams.get("userId") + "&pId=" + searchParams.get("pId")) :
-                navigate("../");
-        } else {
-            navigate("../Game/?userId=" + searchParams.get("userId") + "&gameId=" + searchParams.get("gameId"))
-        }
+        navigate("../Game/?userId=" + userId + "&gameId=" + gameId)
     }
 
     return (
