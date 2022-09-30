@@ -5,7 +5,7 @@ export const markShootable = async (currentSelectedRow, currentSelectedColumn, r
 
   // GET-Aufruf, um Informationen über das laufende Spiel zu bekommen
   let b = game;
-  console.log(b);
+  // console.log(b);
 
   // Variablen
   const rowForShoot = currentSelectedRow

@@ -16,8 +16,7 @@ export const firstSelectionProcess = (rowGiven, columnGiven, g, currentPlayer, f
             return false;
         }
     };
-    isInputCorrect()
-    console.log(isInputCorrect());
+    
 
     if (isInputCorrect()) {
         document.getElementById(letter(column) + row).className += "select";

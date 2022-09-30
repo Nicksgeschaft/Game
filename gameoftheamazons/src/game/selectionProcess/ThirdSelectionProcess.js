@@ -29,9 +29,9 @@ export const shotArrow = async (row, column, gameID, currentPlayer, selectionPro
         var ec = selectionProcess.endcolumn
         var tr = selectionProcess.shotrow
         var tc = selectionProcess.shotcolumn
-        console.log(typeof u, typeof g, typeof sr, typeof sc, typeof er, typeof ec, typeof tr, typeof tc);
+        // console.log(typeof u, typeof g, typeof sr, typeof sc, typeof er, typeof ec, typeof tr, typeof tc);
         // Zug an Server senden
-        console.log(selectionProcess);
+        // console.log(selectionProcess);
         let m = await move(u, g, sr, sc, er, ec, tr, tc)
 
         // falls 400 bad request zurückkommt, brich den Zug ab und setze den Zug zurück
@@ -44,7 +44,7 @@ export const shotArrow = async (row, column, gameID, currentPlayer, selectionPro
                     return { message: error.message }
                 })
 
-            console.log(b1.turnPlayer)
+            // console.log(b1.turnPlayer)
             let listWhite = document.getElementsByClassName("piecewhiteselect")
             let listBlack = document.getElementsByClassName("pieceblackselect")
 

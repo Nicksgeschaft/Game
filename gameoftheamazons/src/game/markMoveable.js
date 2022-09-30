@@ -7,7 +7,7 @@ export const markMoveable = async (currentSelectedRow, currentSelectedColumn, ga
     // Variablen
     const startrow = Number(currentSelectedRow);
     const startcolumn = Number(currentSelectedColumn);
-    console.log(startrow + ", " + startcolumn);
+    // console.log(startrow + ", " + startcolumn);
     let i = 1
     // Schleife, die nach unten alle erlaubten Felder markiert
     do {

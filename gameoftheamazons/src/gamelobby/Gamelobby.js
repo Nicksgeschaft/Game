@@ -16,7 +16,7 @@ export default function Gamelobby() {
 
     let userId = searchParams.get('userId')
     if (userId === undefined || userId === null || isNaN(userId)) {
-        console.log("userId in update: " + searchParams.get('userId'));
+        // console.log("userId in update: " + searchParams.get('userId'));
         userId = '-1'
         // setUserId({current: uId})
     }
@@ -33,18 +33,6 @@ export default function Gamelobby() {
         // console.log("opId in update: " + searchParams.get('opId'));
         opId = '-1'
         // setOpId({current: op})
-    }
-
-
-    const log = () => {
-        // userId = searchParams.get('userId')
-        // pId = searchParams.get('pId')
-        // opId = searchParams.get('opId')
-
-        console.log("UserId: " + userId)
-        console.log("pId: " + pId)
-        console.log("opId: " + opId)
-        // console.log("called by: " + log.caller());
     }
     
 
@@ -63,29 +51,27 @@ export default function Gamelobby() {
     }
 
     const Login = () => {
-        console.log("Logged in");
+        // console.log("Logged in");
 
-        // console.log("vor p");
+        
         createPlayer(userName.current.value).then((p) => {
-            console.log(p);
-            // console.log("nach p, vor URLSearchParams");
+            // console.log(p);
+            
             var playerId = p.id;
             setGlobal({ userId: playerId, pId: playerId, opId: global.opId })
             var uId = playerId.toString();
             if ('URLSearchParams' in window) {
-                // console.log("In URLSearchParams")
                 searchParams.set('userId', uId);
                 searchParams.set('pId', uId);
-                // console.log("userId und pId durch Login: " + userId + ", " + pId);
                 var newURL = window.location.pathname + '?' + searchParams.toString();
                 window.history.pushState({}, null, newURL);
                 userId = searchParams.get('userId');
                 pId = searchParams.get('pId');
-                console.log("searchParams nach Login: " +
-                    userId + ", " +
-                    pId + ", " +
-                    opId
-                );
+                // console.log("searchParams nach Login: " +
+                //     userId + ", " +
+                //     pId + ", " +
+                //     opId
+                // );
             }
         })
         clear();
@@ -95,9 +81,9 @@ export default function Gamelobby() {
     const Logout = () => {
         document.getElementById("CGame").classList.add("visually-hidden");
         document.getElementById("sidebarright").classList.add("visually-hidden");
-        console.log("Logout");
+        // console.log("Logout");
         userId = searchParams.get('userId');
-        console.log("userId vor Logout: " + userId);
+        // console.log("userId vor Logout: " + userId);
         deletePlayer(Number(userId))
         searchParams.delete("userId")
         searchParams.delete("pId")
@@ -108,7 +94,7 @@ export default function Gamelobby() {
     }
 
     function clear() {
-        clearInterval(logInterval);
+        // clearInterval(logInterval);
         clearInterval(gameListInterval);
         clearInterval(playerListInterval);
         clearInterval(pullPlayerInterval);
@@ -126,13 +112,11 @@ export default function Gamelobby() {
         }
         for (const ind in allCurrentGames.games) { // schreibe neue Einträge
             if (Object.hasOwnProperty.call(allCurrentGames.games, ind)) {
-                // console.log(ind);
-                // console.log(await allCurrentGames.games[ind].id);
-                // console.log(await allCurrentGames.games[ind].players);
+                
                 if (allCurrentGames.games[ind].winningPlayer === undefined) { // schreibe nur dann, wenn das Spiel noch keine Gewinner hat
                     const child = document.createElement('li');
                     const baby = document.createElement('a');
-                    console.log("gameId durch Spielerstellung: " + allCurrentGames.games[ind].id);
+                    // console.log("gameId durch Spielerstellung: " + allCurrentGames.games[ind].id);
                     baby.href = "/Game/?userId=" + userId + "&gameId=" + allCurrentGames.games[ind].id;
                     baby.innerText = "Spiel " + allCurrentGames.games[ind].id;
                     child.appendChild(baby);
@@ -146,7 +130,7 @@ export default function Gamelobby() {
     const renderPlayerList = async () => {
         const allCurrentPlayer = await getPlayers(); // Liste alle registrierter Spiele auf dem Server (API)
         const list = await getAllPlayersInGames() // Liste aller Spieler, die in aktuellen Spielen sind
-        // console.log(await allCurrentPlayer + "||" + list);
+        
 
         const parent = document.getElementById("sidebarright");
         if (parent.childElementCount !== 0) { // lösche alle alten Einträge
@@ -159,9 +143,7 @@ export default function Gamelobby() {
                 if (!list.includes(allCurrentPlayer.players[ind].id)) {
                     const child = document.createElement('li');
                     const baby = document.createElement('a');
-                    // console.log(allCurrentPlayer.players);
-                    // console.log(ind);
-                    // console.log(allCurrentPlayer.players[ind]);
+                    
                     baby.innerHTML = allCurrentPlayer.players[ind].name;
                     baby.id = allCurrentPlayer.players[ind].id;
                     baby.className = "clickable"
@@ -176,7 +158,6 @@ export default function Gamelobby() {
     const getAllPlayersInGames = async () => {
         const games = await getGames();
         var list = new Array([]);
-        // console.log(await games);
         for (const ind in games.games) {
             if (Object.hasOwnProperty.call(games.games, ind)) {
                 const playerOne = games.games[ind].players[0];
@@ -191,7 +172,7 @@ export default function Gamelobby() {
 
 
     const choseOpponent = (evt) => {
-        console.log(global);
+        // console.log(global);
         var opponentId = evt.target.id;
         var opponentIdStr = opponentId.toString()
 
@@ -204,7 +185,7 @@ export default function Gamelobby() {
                 var newURL = window.location.pathname + '?' + searchParams.toString();
                 window.history.pushState({}, null, newURL);
                 opId = searchParams.get('opId')
-                console.log("Werte, die nach Wahl des Gegners für die Spielerstellung gültig sind: " + pId + ", " + opId);
+                // console.log("Werte, die nach Wahl des Gegners für die Spielerstellung gültig sind: " + pId + ", " + opId);
             }
         }
     }
@@ -220,21 +201,21 @@ export default function Gamelobby() {
         var gId, playerTwoId;
         // console.log(currentGames);
         currentGames.games.forEach(async (game) => {
-            console.log(game);
+            // console.log(game);
             if (game.winningPlayer === undefined) {
                 playerTwoId = game.players[1].id;
-                console.log("playerTwoId: " + playerTwoId);
-                console.log("userId: " + userId);
-                console.log(playerTwoId === Number(userId));
+                // console.log("playerTwoId: " + playerTwoId);
+                // console.log("userId: " + userId);
+                // console.log(playerTwoId === Number(userId));
                 if (playerTwoId === Number(userId)) {
                     gId = game.id;
-                    await clear();
+                    clear();
                     navigate("../Game?userId=" + playerTwoId + "&gameId=" + gId);
                 }
             }
         });
     }
-    const logInterval = setInterval(log, 5000, [userId, pId, opId]);
+    // const logInterval = setInterval(log, 5000, [userId, pId, opId]);
     const gameListInterval = setInterval(renderGameList, 5000);
     const playerListInterval = setInterval(renderPlayerList, 5000);
     const pullPlayerInterval = setInterval(pullPlayerInGame, 5000);
@@ -249,7 +230,6 @@ export default function Gamelobby() {
                         {/*<button onClick={Logout}>Logout</button>*/}
                         <button onClick={CreateGame}>Create new Game</button>
                         <button onClick={OpenRules}>Rules</button>
-                        <button onClick={() => console.log(searchParams.get('userId'))} >Log</button>
                     </div>
                 ) : (
                     <form >

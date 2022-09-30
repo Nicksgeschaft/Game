@@ -25,7 +25,7 @@ export default function Game() {
     userId = '-1'
   }
 
-  console.log("Das ist von der Game.js, um zu sehen ob es die ID von searchParams: " + gameId);
+  // console.log("Das ist von der Game.js, um zu sehen ob es die ID von searchParams: " + gameId);
 
   var navigate = useNavigate();
 
@@ -74,7 +74,7 @@ export default function Game() {
   async function firstRun() {
     const g = await fetchGameData();
     if (firstRunFinished.current === false) {
-      console.log(await g);
+      // console.log(await g);
       figureAssigned.current.pOne = g.players[0].id;
       figureAssigned.current.pTwo = g.players[1].id;
       firstRunFinished.current = true;
@@ -128,9 +128,9 @@ export default function Game() {
 
   const loadPlayfield = async () => {
     var g = await getGameByID(gameId);
-    console.log();
+    // console.log();
     var turnId = g.turnPlayer
-    console.log(currentPlayer.current !== g.players[turnId].id);
+    // console.log(currentPlayer.current !== g.players[turnId].id);
     if (currentPlayer.current !== g.players[turnId].id) {
       var parent = document.getElementById("parent");
       if (parent.childElementCount !== 0) {
@@ -146,17 +146,12 @@ export default function Game() {
 
   // Funktion für onClick Ereignis
   const select = async (row, column) => {
-    console.log("Ergebnis durch Variable: UserId: " + userId + ", gameId: " + gameId);
-    getGameByID(gameId).then((res) => {
-      console.log("Spieler 1 ID: " + res.players[0].id);
-      console.log("Spieler 2 ID: " + res.players[1].id);
-    })
-    console.log("Ergebnis durch searchParams.get: UserId: " + searchParams.get('userId') + ", gameId: " + searchParams.get('gameId'));
+    await getGameByID(gameId)
     /**
     * Bedingung: es gibt keinen Gewinner
     * -> führe den Algorithmus aus
     */
-    console.log(thereIsAWinner.current === false && currentPlayer.current === Number(userId));
+    
     if (thereIsAWinner.current === false && currentPlayer.current === Number(userId)) {
       /**
        * 1te Überprüfung: wurde noch keine Amazone gewählt -> merke Amazone und markiere mögliche Züge
@@ -165,18 +160,12 @@ export default function Game() {
        * 4te Überprüfung: es wurde die Amazone bewegt und wählt nochmal die Amazone -> setze die Amazone zurück und lösche alle Einträge aus 1.
        * else: verschieße den Pfeil und beende den Zug
        */
-      // console.log("Stage 1.0");
-      // console.log(amazoneSelected.current);
-      // console.log("AmazoneSelectedBoolean1: " + amazoneSelected.current === 1);
+      
       const g = await fetchGameData();
-      console.log(g);
 
       // falls noch keine Amazone gewählt wurde
       if (amazoneSelected.current === 0) {
-        // console.log("Stage 1.1");
-        console.log(figureAssigned.current);
-        console.log(currentPlayer.current);
-        console.log(userId);
+        
         if (firstSelectionProcess(row, column, g, currentPlayer.current, figureAssigned.current) === true) {
           // speichere letztes gewähltes Feld
           selectedCoordinates.current.currentRow = row;
@@ -190,7 +179,7 @@ export default function Game() {
       }
       // falls gleiches Feld nochmal ausgewählt wird, entferne wieder die Anzeige der möglichen Züge
       else if (amazoneSelected.current === 1 && (selectedCoordinates.current.currentColumn === column && selectedCoordinates.current.currentRow === row)) {
-        // console.log("Stage 1.1.r");
+        
         await redoFirstSelectionProcess();
         // setze letztes Feld auf Koordinaten auserhalb des wählbaren Bereichs
         selectedCoordinates.current.currentRow = -1;
@@ -200,7 +189,7 @@ export default function Game() {
       }
       // Zweig für den Zug
       else if (amazoneSelected.current === 1) {
-        // console.log("Stage 1.2");
+        
         await moveAmazone(row, column, gameboard.current, selectionProcess.current);
         // speichere letzten gewählte Koordinaten
         selectedCoordinates.current.currentRow = row;
@@ -213,15 +202,14 @@ export default function Game() {
       }
       // falls gleiches Feld nochmal ausgewählt wird, entferne wieder die Anzeige der möglichen Ziele
       else if (amazoneSelected.current === 2 && (selectedCoordinates.currentColumn === column && selectedCoordinates.currentRow === row)) {
-        // console.log("Stage 1.2.r");
+        
         redoMove();
         // setze den Wert auf 1, da die Amazone wieder auf ihre Startposition gesetzt wird
         amazoneSelected.current = 0;
       }
       // verschieße den Pfeil
       else if (amazoneSelected.current === 2) {
-        // console.log("Stage 1.3");
-        // console.log(idGame.current);
+        
         await shotArrow(row, column, Number(gameId), currentPlayer.current, selectionProcess.current, amazoneSelected.current);
         // speicher letzte Auswahl
         selectedCoordinates.current.currentRow = row;
@@ -233,7 +221,7 @@ export default function Game() {
         selectionProcess.current.shotcolumn = column;
         // aktuelles Spielbrett aktuallisieren
         var newGameData = await fetchGameData();
-        console.log(await newGameData);
+        
         gameboard.current.board = newGameData.board;
         g.turnPlayer === 0 ? currentPlayer.current = g.players[0].id : currentPlayer.current = g.players[1].id;
         winningPlayer.current = newGameData.winningPlayer;
@@ -246,13 +234,13 @@ export default function Game() {
     }
     // wenn es einen Gewinner gibt
     const w = await fetchGameData();
-    console.log(await w.winningPlayer);
+    
     if (w.winningPlayer !== undefined) {
-      console.log("WINNING PLAYER: " + (w.winningPlayer === 0 ? "Spieler1" : "Spieler2"));
+      // console.log("WINNING PLAYER: " + (w.winningPlayer === 0 ? "Spieler1" : "Spieler2"));
       document.getElementById("currentPlayer").textContent = "GEWINNER: " + (Number(await w.winningPlayer) === 0 ? "Spieler 1" : "Spieler 2");
       winningPlayer.current = w.winningPlayer;
       thereIsAWinner.current = true
-      console.log(thereIsAWinner.current);
+      
       return;
     }
 
@@ -293,10 +281,10 @@ export default function Game() {
   window.addEventListener("click", evt => {
     const targetClick = evt.target.className;
     if (targetClick.includes("box")) {
-      console.log(evt.target.id);
+      // console.log(evt.target.id);
       const row = Number(evt.target.id.charAt(1));
       const column = Number((evt.target.id.charCodeAt(0) - 97));
-      console.log(row + ", " + column);
+      // console.log(row + ", " + column);
       select(row, column);
     }
   })

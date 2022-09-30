@@ -188,10 +188,10 @@ export const deletePlayer = (id) => {
 // FIXME: muss noch angepasst werden an die neuen Vorraussetzungen
 export const newGame = (maxTurnTime, gameSizeRows, gameSizeColumns, board, playerOne, playerTwo) => {
     try {
-        console.log("playerOne");
-        console.log(playerOne);
-        console.log("playerTwo");
-        console.log(playerTwo);
+        // console.log("playerOne");
+        // console.log(playerOne);
+        // console.log("playerTwo");
+        // console.log(playerTwo);
         const game = {
             "maxTurnTime": maxTurnTime,
             "players": [
@@ -205,7 +205,7 @@ export const newGame = (maxTurnTime, gameSizeRows, gameSizeColumns, board, playe
             }
         }
 
-        console.log(game);
+        // console.log(game);
 
         const res = POST(game, urlGame)
             .then((response) => {
@@ -291,7 +291,7 @@ export const move = (playerID, gameID, startrow, startcolumn, endrow, endcolumn,
 
         const res = POST(move, urlMove + playerID + "/" + gameID)
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 return response
             }).catch((error) => {
                 console.log("POST error. Message is: " + error.message)

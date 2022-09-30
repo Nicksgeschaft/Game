@@ -14,7 +14,7 @@ export default function Help() {
         pId = '-1'
     }
 
-    console.log("Das ist von der Help.js, um zu sehen ob es die ID von searchParams: " + userId);
+    // console.log("Das ist von der Help.js, um zu sehen ob es die ID von searchParams: " + userId);
 
     let navigate = useNavigate();
 

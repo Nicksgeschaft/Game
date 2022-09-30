@@ -4,7 +4,7 @@ import { reset } from "../communication/Communication";
 
 export default async function ResetAll() {
     await reset();
-    console.log("Es wurde alles zurückgesetzt.");
+    // console.log("Es wurde alles zurückgesetzt.");
     return(
         <></>
     )

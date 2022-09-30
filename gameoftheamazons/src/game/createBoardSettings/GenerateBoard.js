@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { newGame,generateAI } from "../../communication/Communication";
+import { newGame, generateAI } from "../../communication/Communication";
 import { createBoard } from "../createBoard/CreateNewBoard";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { BackgroundColor } from "../RenderBoard"
@@ -8,21 +8,13 @@ import { PlaceAmazons } from "../RenderBoard";
 
 
 export function GenerateBoard(u) {
-    
-
-
 
     var navigate = useNavigate();
 
     const xSize = useRef();
     const timeout = useRef();
-    function logGenerate() {
-        console.log(u)
-        console.log(u.u.userId);
-        console.log(u.u.pId);
-        console.log(u.u.opId);
-    }
 
+    const users = useRef({pId: u.u.pId, opId: u.u.opId})
     var gameID;
 
     const [settings, setSettings] = useState({ boardWidth: 10, timeoutTime: 60000 });
@@ -47,21 +39,21 @@ export function GenerateBoard(u) {
 
 
     async function startGame() {
-
+        // console.log(users.pId);
+        // console.log(users.opId);
         if (checkFigureValidity() === true && boardPrev !== undefined) {
             const g = await newGame(
                 Number(settings.timeoutTime),
                 Number(settings.boardWidth),
                 Number(settings.boardWidth),
                 boardPrev,
-                Number(u.u.pId),
-                Number(u.u.opId)
+                Number(users.pId),
+                Number(users.opId)
             )
-            console.log(await g);
+            // console.log(await g);
             gameID = await g.id;
-            console.log(g.id);
+            // console.log(g.id);
             if (g.id !== undefined) {
-                console.log("bin trotzdem hier :P");
                 navigate("/Game/?userId=" + u.u.userId + "&gameId=" + gameID)
             }
         }
@@ -156,15 +148,18 @@ export function GenerateBoard(u) {
                     if (el.className.includes("pieceblack")) el.classList.remove("pieceblack");
                     else el.classList.remove("piecewhite");
                 }
-                console.log(boardPrev);
+                // console.log(boardPrev);
             }
         }
     }
 
-    const createAI = () => {
-        if(document.getElementById("playAgainstAI").checked === true){
-            generateAI() } else return; 
-            }
+    const createAI = async () => {
+        console.log(document.getElementById("playAgainstAI"));
+        if (document.getElementById("playAgainstAI").checked === true) {
+            var aiId = await generateAI();
+            users.opId = aiId;
+        } else return;
+    }
 
     return (
         <div className="settingswindow" id="sw">
@@ -175,7 +170,7 @@ export function GenerateBoard(u) {
                 <p>Dauer des Zuges (ms): </p>
                 <input id="inputTimeoutLength" type="number" ref={timeout} value={settings.timeoutTime} min="30000" onChange={submit} />
                 <p>Gegen AI spielen:
-                <input type="checkbox"class="playAgainstAI" value="Play against AI" onClick={createAI}></input></p>
+                    <input type="checkbox" className="playAgainstAI" value="Play against AI" onClick={createAI}></input></p>
             </div>
             <div className="submitbutton">
 
@@ -187,7 +182,6 @@ export function GenerateBoard(u) {
             </div>
             <div className="create">
                 <input type="button" id="createGame" className="createGame" value={"createGame"} onClick={startGame} />
-                <input type="button" id="GenerateLog" className="GenerateLog" value={"GenerateLog"} onClick={logGenerate} />
                 <div className="currentBoard" id="parent" onClick={clicks}></div>
             </div>
         </div>
