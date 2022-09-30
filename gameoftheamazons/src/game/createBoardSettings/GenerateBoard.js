@@ -99,6 +99,7 @@ export function GenerateBoard(u) {
         for (let i = 0; i < box.length; i++) {
             box[i].style.height = (parent.offsetHeight / settings.boardWidth) + 'px';
         }
+        document.getElementById("grayChoose").classList.remove("grayed");
     }
 
 
@@ -137,6 +138,7 @@ export function GenerateBoard(u) {
 
     function changeAmazone() {
         change === 0 ? setChange(1) : setChange(0);
+        document.getElementById("grayCreate").classList.remove("grayed");
     }
 
     const clicks = (evt) => {
@@ -181,11 +183,11 @@ export function GenerateBoard(u) {
 
                 <input type="button" className="showUserPlayfield" value={"showField"} onClick={showField} />
             </div>
-            <div className="chooseAmazon">
-                <input type="button" className="setAmazone" value="changePlayerAmazone" onClick={changeAmazone} />
-                <p>gewählte Amazone: {change}</p>
+            <div id="grayChoose" className="chooseAmazon grayed">
+                <input type="button" className="setAmazone grayed" value="changePlayerAmazone" onClick={changeAmazone} />
+                <p>gewählte Amazone: Spieler {change + 1}</p>
             </div>
-            <div className="create">
+            <div id="grayCreate" className="create grayed">
                 <input type="button" id="createGame" className="createGame" value={"createGame"} onClick={startGame} />
                 <input type="button" id="GenerateLog" className="GenerateLog" value={"GenerateLog"} onClick={logGenerate} />
                 <div className="currentBoard" id="parent" onClick={clicks}></div>

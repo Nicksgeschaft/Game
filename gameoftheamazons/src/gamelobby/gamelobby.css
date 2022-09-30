@@ -321,4 +321,8 @@ body{
   width: 90%;
   font-size: 80%;
 }
+
+.grayed input[type=button]{
+  background-color: gray;
+}
   
