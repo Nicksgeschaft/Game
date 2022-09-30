@@ -14,7 +14,9 @@ export function GenerateBoard(u) {
     const xSize = useRef();
     const timeout = useRef();
 
-    const users = useRef({pId: u.u.pId, opId: u.u.opId})
+    // console.log(u.u);
+    // const users = useRef({ pId: u.u.pId, opId: u.u.opId })
+    // console.log(users.current);
     var gameID;
 
     const [settings, setSettings] = useState({ boardWidth: 10, timeoutTime: 60000 });
@@ -34,27 +36,51 @@ export function GenerateBoard(u) {
                 timeoutTime: timeout.current.value
             });
         }
+        console.log(u);
     };
 
 
 
     async function startGame() {
-        // console.log(users.pId);
-        // console.log(users.opId);
+
         if (checkFigureValidity() === true && boardPrev !== undefined) {
-            const g = await newGame(
-                Number(settings.timeoutTime),
-                Number(settings.boardWidth),
-                Number(settings.boardWidth),
-                boardPrev,
-                Number(users.pId),
-                Number(users.opId)
-            )
-            // console.log(await g);
-            gameID = await g.id;
-            // console.log(g.id);
-            if (g.id !== undefined) {
-                navigate("/Game/?userId=" + u.u.userId + "&gameId=" + gameID)
+            var b = u.checked
+            console.log(u.checked);
+            if (b === true) {
+                var ai = await generateAI();
+                var aiId = ai.id;
+                console.log(aiId);
+
+                const g = await newGame(
+                    Number(settings.timeoutTime),
+                    Number(settings.boardWidth),
+                    Number(settings.boardWidth),
+                    boardPrev,
+                    Number(u.u.pId),
+                    Number(aiId)
+                )
+                // console.log(await g);
+                gameID = await g.id;
+                // console.log(g.id);
+                if (g.id !== undefined) {
+                    navigate("/Game/?userId=" + u.u.userId + "&gameId=" + gameID)
+                }
+            } else {
+
+                const g = await newGame(
+                    Number(settings.timeoutTime),
+                    Number(settings.boardWidth),
+                    Number(settings.boardWidth),
+                    boardPrev,
+                    Number(u.u.pId),
+                    Number(u.u.opId)
+                )
+                // console.log(await g);
+                gameID = await g.id;
+                // console.log(g.id);
+                if (g.id !== undefined) {
+                    navigate("/Game/?userId=" + u.u.userId + "&gameId=" + gameID)
+                }
             }
         }
     }
@@ -150,29 +176,29 @@ export function GenerateBoard(u) {
                     if (el.className.includes("pieceblack")) el.classList.remove("pieceblack");
                     else el.classList.remove("piecewhite");
                 }
-                // console.log(boardPrev);
+                console.log(boardPrev);
             }
         }
     }
 
-    const createAI = async () => {
-        console.log(document.getElementById("playAgainstAI"));
-        if (document.getElementById("playAgainstAI").checked === true) {
-            var aiId = await generateAI();
-            users.opId = aiId;
-        } else return;
-    }
+    // const createAI = async () => {
+    //     // console.log(document.getElementById("playAgainstAI"));
+    //     if (document.getElementById("playAgainstAI").checked === true) {
+    //         var aiId = await generateAI();
+    //         users.opId = aiId;
+    //     } else return;
+    // }
 
     return (
         <div className="settingswindow" id="sw">
 
             <div className="input">
                 <p>Gib die Größe des Spielfeldes an: </p>
-                <input id="inputBoardSize" type="number" ref={xSize} value={settings.boardWidth} min="5" onChange={submit} />
+                <input id="inputBoardSize" type="number" ref={xSize} value={settings.boardWidth} min="5" max="25" onChange={submit} />
                 <p>Dauer des Zuges (ms): </p>
                 <input id="inputTimeoutLength" type="number" ref={timeout} value={settings.timeoutTime} min="30000" onChange={submit} />
                 <p>Gegen AI spielen:
-                    <input type="checkbox" className="playAgainstAI" value="Play against AI" onClick={createAI}></input></p>
+                    <input type="checkbox" id="playAgainstAI" value="Play against AI" /*onClick={createAI}*/></input></p>
             </div>
             <div className="submitbutton">
 
