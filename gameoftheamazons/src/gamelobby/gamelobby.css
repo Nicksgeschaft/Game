@@ -284,6 +284,9 @@ body{
  
  
 }
+.sidebarright li:hover{
+  color: gray;
+}
 .CGame .back{
   position: absolute;
   right: 25%;
